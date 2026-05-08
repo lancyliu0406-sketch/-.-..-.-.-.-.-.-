@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小问题</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(pink, lightblue);
+    font-family: sans-serif;
+}
+
+#box {
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+}
+
+button {
+    padding: 12px 18px;
+    font-size: 18px;
+    margin: 10px;
+}
+
+#noBtn {
+    position: absolute;
+}
+
+#text {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<div id="box">
+    <h3>你喜不喜欢我？</h3>
+    <button onclick="yes()">喜欢</button>
+</div>
+
+<button id="noBtn">不喜欢</button>
+
+<div id="text"></div>
+
+<script>
+
+const noBtn = document.getElementById("noBtn");
+const text = document.getElementById("text");
+
+let count = 0;
+
+// 初始化位置
+moveBtn();
+
+function moveBtn() {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 200);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// 鼠标 + 手机触摸都支持
+noBtn.addEventListener("mouseover", escape);
+noBtn.addEventListener("touchstart", escape);
+
+function escape() {
+    count++;
+    moveBtn();
+    addText();
+}
+
+function yes() {
+    alert("终于！！(｡♥‿♥｡)");
+}
+
+function addText() {
+    const msg = document.createElement("div");
+    msg.innerText = "在一起吧TT求你了";
+    msg.style.position = "absolute";
+    msg.style.left = Math.random() * window.innerWidth + "px";
+    msg.style.top = Math.random() * window.innerHeight + "px";
+    document.body.appendChild(msg);
+
+    // 越点越疯狂（多次触发弹窗）
+    if (count > 5) {
+        setTimeout(() => {
+            alert("在一起吧TT求你了");
+        }, 300);
+    }
+}
+
+// 防止屏幕旋转后按钮卡死
+window.addEventListener("resize", moveBtn);
+
+</script>
+
+</body>
+</html>
